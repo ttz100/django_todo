@@ -1,0 +1,36 @@
+{% extends 'todo/base.html' %}
+{% block content %}
+<h1>Todo List</h1>
+<form action="{% url 'todo:create' %}" method="post">
+    {% csrf_token %}
+    <form class="form-group">
+        <label for="todo" class="col-sm-3 control-label">Todo</label>
+        <div class="col-sm-6">
+            {{ form.body }}
+        </div>
+    </form>
+</form>
+
+<h2>Current Todos</h2>
+<table class="table table-striped todo-table">
+    <thead>
+        <th>Todos</th><th>&nbsp;</th>
+    </thead>
+    <tbody>
+        {% for post in posts %}
+            <tr>
+                <td>
+                    <div>{{ post.body }}</div>
+                </td>
+                <td>
+                    <form action="{% url 'todo:delete' post.id %}" method="post">
+                        {% csrf_token %}
+                        <button>Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
